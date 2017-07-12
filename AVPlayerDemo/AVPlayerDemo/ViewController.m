@@ -27,7 +27,8 @@
 @property (nonatomic,strong) UISlider *slider;
 @property (nonatomic,strong) UILabel *nowLabel;
 @property (nonatomic,strong) UILabel *remainLabel;
-
+// 是否全屏
+@property (nonatomic,assign) BOOL isFullScreen;
 @end
 
 @implementation ViewController
@@ -86,6 +87,8 @@
         make.centerY.equalTo(self.bottomView);
         make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
+    //点击全屏1
+    [self.fullScreenButton addTarget:self action:@selector(clickFullScreen:) forControlEvents:UIControlEventTouchUpInside];
     
     // 底部进度条
     self.slider = [[UISlider alloc] init];
@@ -160,6 +163,86 @@
         [self.player pause];
     }
 }
-
-
+#pragma mark - 点击全屏按钮
+- (void)clickFullScreen:(UIButton *)button
+{
+    if (!self.isFullScreen)
+    {
+        [self toFullScreenWithInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
+        [self.fullScreenButton setImage:[UIImage imageNamed:@"nonfullscreen@3x"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self toSmallScreen];
+        [self.fullScreenButton setImage:[UIImage imageNamed:@"fullscreen@3x"] forState:UIControlStateNormal];
+    }
+    self.isFullScreen = !self.isFullScreen;
+    
+}
+#pragma mark - 显示全屏
+-(void)toFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation{
+    // 先移除之前的
+    [self.backView removeFromSuperview];
+    // 初始化
+    self.backView.transform = CGAffineTransformIdentity;
+    if (interfaceOrientation==UIInterfaceOrientationLandscapeLeft) {
+        self.backView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+    }else if(interfaceOrientation==UIInterfaceOrientationLandscapeRight){
+        self.backView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    }
+    // BackView的frame能全屏
+    self.backView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+    // layer的方向宽和高对调
+    self.playerLayer.frame = CGRectMake(0, 0, kScreenHeight, kScreenWidth);
+    
+    // remark 约束
+    [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(50);
+        make.top.mas_equalTo(kScreenWidth-50);
+        make.left.equalTo(self.backView).with.offset(0);
+        make.width.mas_equalTo(kScreenHeight);
+    }];
+    
+    
+    [self.nowLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.slider.mas_left).with.offset(0);
+        make.top.equalTo(self.slider.mas_bottom).with.offset(0);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+    }];
+    
+    [self.remainLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.slider.mas_right).with.offset(0);
+        make.top.equalTo(self.slider.mas_bottom).with.offset(0);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+    }];
+    
+    // 加到window上面
+    [[UIApplication sharedApplication].keyWindow addSubview:self.backView];
+    
+}
+#pragma mark - 缩小全屏
+-(void)toSmallScreen{
+    // 先移除
+    [self.backView removeFromSuperview];
+    
+    __weak typeof(self)weakSelf = self;
+    [UIView animateWithDuration:0.5f animations:^{
+        weakSelf.backView.transform = CGAffineTransformIdentity;
+        weakSelf.backView.frame = CGRectMake(0, 80, kScreenWidth, kScreenHeight / 2.5);
+        weakSelf.playerLayer.frame =  weakSelf.backView.bounds;
+        // 再添加到View上
+        [weakSelf.view addSubview:weakSelf.backView];
+        
+        // remark约束
+        [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(weakSelf.backView).with.offset(0);
+            make.right.equalTo(weakSelf.backView).with.offset(0);
+            make.height.mas_equalTo(50);
+            make.bottom.equalTo(weakSelf.backView).with.offset(0);
+        }];
+    }completion:^(BOOL finished) {
+        
+    }];
+    
+}
 @end
