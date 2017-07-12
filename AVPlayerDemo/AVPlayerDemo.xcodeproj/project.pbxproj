@@ -24,8 +24,6 @@
 		C9B9788C1F135841007E5A0C /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B9787E1F135841007E5A0C /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		C9B9788D1F135841007E5A0C /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B978801F135841007E5A0C /* View+MASAdditions.m */; };
 		C9B9788E1F135841007E5A0C /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B978831F135841007E5A0C /* ViewController+MASAdditions.m */; };
-		C9B978A91F14C803007E5A0C /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B9789D1F14C803007E5A0C /* close@2x.png */; };
-		C9B978AA1F14C803007E5A0C /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B9789E1F14C803007E5A0C /* close@3x.png */; };
 		C9B978AB1F14C803007E5A0C /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B9789F1F14C803007E5A0C /* dot@2x.png */; };
 		C9B978AC1F14C803007E5A0C /* dot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B978A01F14C803007E5A0C /* dot@3x.png */; };
 		C9B978AD1F14C803007E5A0C /* fullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B978A11F14C803007E5A0C /* fullscreen@2x.png */; };
@@ -264,7 +262,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9B978AE1F14C803007E5A0C /* fullscreen@3x.png in Resources */,
-				C9B978AA1F14C803007E5A0C /* close@3x.png in Resources */,
 				C9B978841F135841007E5A0C /* Info.plist in Resources */,
 				C9B978621F1352A8007E5A0C /* LaunchScreen.storyboard in Resources */,
 				C9B978AB1F14C803007E5A0C /* dot@2x.png in Resources */,
@@ -272,7 +269,6 @@
 				C9B978AD1F14C803007E5A0C /* fullscreen@2x.png in Resources */,
 				C9B978B01F14C803007E5A0C /* nonfullscreen@3x.png in Resources */,
 				C9B978B31F14C803007E5A0C /* play@2x.png in Resources */,
-				C9B978A91F14C803007E5A0C /* close@2x.png in Resources */,
 				C9B9785F1F1352A8007E5A0C /* Assets.xcassets in Resources */,
 				C9B978B11F14C803007E5A0C /* pause@2x.png in Resources */,
 				C9B978AC1F14C803007E5A0C /* dot@3x.png in Resources */,
@@ -458,6 +454,7 @@
 				C9B978681F1352A8007E5A0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

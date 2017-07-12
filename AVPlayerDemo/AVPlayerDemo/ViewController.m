@@ -51,6 +51,7 @@
     _playerLayer.frame = self.backView.bounds;
     [self.backView.layer insertSublayer:self.playerLayer atIndex:0];
     
+    
     // 布局底部功能栏
     self.bottomView = [[UIView alloc] init];
     self.bottomView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
@@ -72,6 +73,8 @@
         make.centerY.equalTo(self.bottomView);
         make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
+    //播放
+    [self.playButton addTarget:self action:@selector(pauseOrPlay:) forControlEvents:UIControlEventTouchUpInside];
     
     // 底部全屏按钮
     self.fullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -142,6 +145,21 @@
     
 }
 
+#pragma mark - 暂停或者播放
+- (void)pauseOrPlay:(UIButton *)sender
+{
+    if (self.player.rate != 1.0f)
+    {
+        [sender setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        
+        [self.player play];
+    }
+    else
+    {
+        [sender setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [self.player pause];
+    }
+}
 
 
 @end
