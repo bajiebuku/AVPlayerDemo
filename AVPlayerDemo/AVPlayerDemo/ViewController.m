@@ -52,6 +52,9 @@
     _playerLayer.frame = self.backView.bounds;
     [self.backView.layer insertSublayer:self.playerLayer atIndex:0];
     
+    //添加手势动作,隐藏下面的进度条
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+    [self.backView addGestureRecognizer:tap];
     
     // 布局底部功能栏
     self.bottomView = [[UIView alloc] init];
@@ -149,8 +152,8 @@
 }
 
 #pragma mark - 暂停或者播放
-- (void)pauseOrPlay:(UIButton *)sender
-{
+- (void)pauseOrPlay:(UIButton *)sender{
+    
     if (self.player.rate != 1.0f)
     {
         [sender setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -164,8 +167,8 @@
     }
 }
 #pragma mark - 点击全屏按钮
-- (void)clickFullScreen:(UIButton *)button
-{
+- (void)clickFullScreen:(UIButton *)button{
+    
     if (!self.isFullScreen)
     {
         [self toFullScreenWithInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
@@ -245,4 +248,20 @@
     }];
     
 }
+
+#pragma mark - 单击手势
+- (void)singleTap:(UITapGestureRecognizer *)tap{
+
+    [UIView animateWithDuration:1.0 animations:^{
+        if (self.bottomView.alpha == 1)
+        {
+            self.bottomView.alpha = 0;
+        }
+        else if (self.bottomView.alpha == 0)
+        {
+            self.bottomView.alpha = 1;
+        }
+    }];
+}
+
 @end
